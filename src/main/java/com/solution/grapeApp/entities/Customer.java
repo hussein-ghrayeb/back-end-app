@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Builder
@@ -41,6 +42,11 @@ public class Customer implements UserDetails {
         return null;
     }
 
+    @OneToMany(mappedBy = "customer",fetch =FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "customer",fetch =FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses;
     @Override
     public boolean isAccountNonExpired() {
         return true;
