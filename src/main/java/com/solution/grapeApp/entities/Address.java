@@ -17,16 +17,22 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    
+    @Column(name = "longitude")
+    private double longitude;
+    
+    @Column(name = "latitude")
+    private double latitude;
 
-    // to discuss address attribure givem from google maps
+    @Column(name = "is_default")
+    private Boolean isDefault;
 
-    @Column(name = "is_main")
-    private Boolean isMain;
+    @Column(name = "address_area")
+    private String addressArea;
 
+    @Column(name = "additonal_info")
+    private String additionalInfo;
+    
     @ManyToOne
     private Customer customer;
-
-    @ManyToOne
-    private Restaurant restaurant;
-
 }
