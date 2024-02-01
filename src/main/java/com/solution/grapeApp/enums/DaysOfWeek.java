@@ -12,23 +12,15 @@ public enum DaysOfWeek {
     SUNDAY;
 
     public static DaysOfWeek fromDayOfWeek(DayOfWeek dayOfWeek) {
-        switch (dayOfWeek) {
-            case MONDAY:
-                return MONDAY;
-            case TUESDAY:
-                return TUESDAY;
-            case WEDNESDAY:
-                return WEDNESDAY;
-            case THURSDAY:
-                return THURSDAY;
-            case FRIDAY:
-                return FRIDAY;
-            case SATURDAY:
-                return SATURDAY;
-            case SUNDAY:
-                return SUNDAY;
-            default:
-                throw new IllegalArgumentException("Invalid day of week: " + dayOfWeek);
-        }
+        return switch (dayOfWeek) {
+            case MONDAY -> MONDAY;
+            case TUESDAY -> TUESDAY;
+            case WEDNESDAY -> WEDNESDAY;
+            case THURSDAY -> THURSDAY;
+            case FRIDAY -> FRIDAY;
+            case SATURDAY -> SATURDAY;
+            case SUNDAY -> SUNDAY;
+            default -> throw new IllegalArgumentException("Invalid day of week: " + dayOfWeek);
+        };
     }
 }

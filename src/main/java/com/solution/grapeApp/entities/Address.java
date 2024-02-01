@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="item")
+@Table(name="address")
 public class Address {
 
     @Id
@@ -30,7 +30,7 @@ public class Address {
     @Column(name = "address_area")
     private String addressArea;
 
-    @Column(name = "additonal_info")
+    @Column(name = "additional_info")
     private String additionalInfo;
     
     @ManyToOne

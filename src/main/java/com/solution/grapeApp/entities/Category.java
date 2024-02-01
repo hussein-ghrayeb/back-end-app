@@ -1,5 +1,6 @@
 package com.solution.grapeApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,13 +27,12 @@ public class Category {
     @Column(name="en_name")
     private String englishName;
 
-    @Column(name="ar_desc")
-    private String arabicDescription;
-
-    @Column(name="en_desc")
-    private String englishDescription;
+    @ManyToOne
+    @JoinColumn(name="restaurant_id")
+    @JsonIgnore
+    private Restaurant restaurant;
 
     @OneToMany(mappedBy = "category")
-    private List<Item> items;
+    private List<Product> products;
 
 }

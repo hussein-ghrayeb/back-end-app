@@ -1,5 +1,6 @@
 package com.solution.grapeApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,8 +15,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="item")
-public class Item {
+@Table(name="product")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -40,31 +41,22 @@ public class Item {
     private Double price;
 
     @Column(name="shelf_available")
-    private Integer shelfAvailable;
+    private Float shelfAvailable;
 
     @Column(name="stock_available")
-    private Integer stockAvailable;
+    private Float stockAvailable;
 
-    @Column(name="discount")
-    private Double discount;
+    @Column(name="is_favorite")
+    private Boolean isFavorite;
 
-    @Column(name="weight")
-    private Double weight;
+    @Column(name="image_url")
+    private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+    @JsonIgnore
     private Category category;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Menu menu;
-
-    @ManyToMany(mappedBy = "items",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "products")
+    @JsonIgnore
     private Set<Order> orders = new HashSet<>();
-
-    @ManyToMany(mappedBy = "items",fetch = FetchType.LAZY)
-    private Set<Offer> offers = new HashSet<>();
-
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Offer offer;
-
 }

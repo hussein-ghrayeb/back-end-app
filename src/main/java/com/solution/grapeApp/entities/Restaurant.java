@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
@@ -48,13 +47,9 @@ public class Restaurant {
     @Column(name = "closing_day")
     private Set<DaysOfWeek> closingDays;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "restaurant", fetch = FetchType.EAGER, orphanRemoval = true )
-    private Menu menu;
+    @OneToMany(mappedBy = "restaurant",fetch =FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Category> categories;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "restaurant",fetch =FetchType.EAGER, orphanRemoval = true)
-    private List<Address> addresses;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_type")
-    private RestaurantType restaurantType;
+
 }

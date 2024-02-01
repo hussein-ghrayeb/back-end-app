@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="order")
+@Table(name="orders")
 public class Order {
 
     @Id
@@ -29,7 +29,6 @@ public class Order {
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
-
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -40,20 +39,12 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @ManyToMany
-    @JoinTable(
-            name = "order_item",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id")
-    )
-    private Set<Item> items = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
-            name = "order_offer",
+            name = "order_product",
             joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "offer_id")
+            inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private Set<Offer> offers = new HashSet<>();
-
+    private Set<Product> products = new HashSet<>();
 }
