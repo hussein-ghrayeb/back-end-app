@@ -50,6 +50,4 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant",fetch =FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> categories;
 
-
-
 }

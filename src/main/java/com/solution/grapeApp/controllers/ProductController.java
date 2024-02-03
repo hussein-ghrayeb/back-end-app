@@ -18,7 +18,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
     @GetMapping("/getAllProducts")
-    public ResponseEntity<List<Product>> getAllItProducts() {
+    public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
@@ -34,7 +34,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/getProductsByCategoryId")
+    @GetMapping("/getProductsByCategoryId")
     public ResponseEntity<List<Product>> getProductsByCategoryId(@RequestParam String categoryId) {
         return ResponseEntity.ok(productService.getProductsByCategory(categoryId));
     }

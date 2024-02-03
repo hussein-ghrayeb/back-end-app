@@ -1,5 +1,6 @@
 package com.solution.grapeApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,5 +35,6 @@ public class Address {
     private String additionalInfo;
     
     @ManyToOne
+    @JsonIgnore
     private Customer customer;
 }

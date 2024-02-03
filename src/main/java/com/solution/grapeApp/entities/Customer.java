@@ -1,5 +1,6 @@
 package com.solution.grapeApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,6 +44,7 @@ public class Customer implements UserDetails {
     }
 
     @OneToMany(mappedBy = "customer",fetch =FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Order> orders;
 
     @OneToMany(mappedBy = "customer",fetch =FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
