@@ -22,7 +22,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
-    @PostMapping("/getProductById")
+    @GetMapping("/getProductById")
     public ResponseEntity<Product> getProductsById(@RequestParam String id) {
         Optional<Product> optionalProduct = productService.getProductById(id);
 
@@ -62,4 +62,11 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/getProductsByName")
+    public ResponseEntity<List<Product>> getAllItProducts(@RequestParam String name) {
+        return ResponseEntity.ok(productService.findProductsByName(name));
+    }
+
+
 }

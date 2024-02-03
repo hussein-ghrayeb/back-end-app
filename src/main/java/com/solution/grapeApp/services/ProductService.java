@@ -32,5 +32,9 @@ public class ProductService {
         return repository.existsById(id);
     }
 
+    public List<Product> findProductsByName(String name){
+        return  repository.findProductsByName(name);
+    }
+
 
 }

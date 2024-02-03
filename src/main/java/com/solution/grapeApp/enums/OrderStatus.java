@@ -1,10 +1,10 @@
 package com.solution.grapeApp.enums;
 
 public enum OrderStatus {
-    EN_ROUTE,
     PROCESSING,
+    READY,
+    EN_ROUTE,
     DELIVERED,
-    READY_FOR_PICKUP,
     CANCELED;
 }
 

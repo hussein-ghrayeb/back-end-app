@@ -21,10 +21,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name="ar_name")
+    @Column(name="ar_name",unique = true)
     private String arabicName;
 
-    @Column(name="en_name")
+    @Column(name="en_name",unique = true)
     private String englishName;
 
     @ManyToOne

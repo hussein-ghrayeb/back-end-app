@@ -29,17 +29,26 @@ public class Order {
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
     @Column(name = "details")
     private String details;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Column(name = "in_store_pickup")
+    private Boolean inStorePickup;
 
+    @Column(name="delivery_instruction")
+    private String deliveryInstruction;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+    
     @ManyToMany
     @JoinTable(
             name = "order_product",
@@ -47,4 +56,5 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<Product> products = new HashSet<>();
+
 }
