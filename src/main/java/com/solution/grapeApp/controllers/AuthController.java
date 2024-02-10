@@ -1,13 +1,11 @@
 package com.solution.grapeApp.controllers;
 
-import com.solution.grapeApp.entities.AuthenticationRequest;
-import com.solution.grapeApp.entities.AuthenticationResponse;
+import com.solution.grapeApp.entities.requests.AuthenticationRequest;
+import com.solution.grapeApp.entities.responses.AuthenticationResponse;
 import com.solution.grapeApp.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")

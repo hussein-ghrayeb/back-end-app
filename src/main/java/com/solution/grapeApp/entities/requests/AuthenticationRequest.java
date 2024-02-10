@@ -1,4 +1,4 @@
-package com.solution.grapeApp.entities;
+package com.solution.grapeApp.entities.requests;
 
 
 import lombok.AllArgsConstructor;

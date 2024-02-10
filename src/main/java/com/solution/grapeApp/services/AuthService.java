@@ -3,12 +3,11 @@ package com.solution.grapeApp.services;
 
 
 import com.solution.grapeApp.config.JwtService;
-import com.solution.grapeApp.entities.AuthenticationRequest;
-import com.solution.grapeApp.entities.AuthenticationResponse;
+import com.solution.grapeApp.entities.requests.AuthenticationRequest;
+import com.solution.grapeApp.entities.responses.AuthenticationResponse;
 import com.solution.grapeApp.entities.Customer;
 import com.solution.grapeApp.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
