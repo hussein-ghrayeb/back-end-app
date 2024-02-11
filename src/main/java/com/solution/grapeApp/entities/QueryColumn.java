@@ -28,8 +28,4 @@ public class QueryColumn {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "active")
-    private Boolean active;
-
-
 }

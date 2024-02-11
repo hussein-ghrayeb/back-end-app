@@ -12,8 +12,7 @@ public class FxyService {
     @Autowired
     private FxyRepository  repository;
 
-    public String getTableDisplayColumn(String table){
-        List<Fxy> fxyList = repository.findFxy("EXCEL","DISPLAYCOLUMNS",table,null,null,null);
-        return  null;
+    public List<Fxy> getTableDisplayColumn(String tableName){
+        return  repository.findFxy("EXCEL","GENERATION","COLUMN",tableName,null,null,null,null);
     }
 }

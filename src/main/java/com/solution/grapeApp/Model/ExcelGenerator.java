@@ -1,5 +1,7 @@
 package com.solution.grapeApp.Model;
 
+import com.solution.grapeApp.entities.Fxy;
+import com.solution.grapeApp.entities.QueryColumn;
 import com.solution.grapeApp.entities.QueryTable;
 import com.solution.grapeApp.services.DynamicService;
 import com.solution.grapeApp.services.FxyService;
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class ExcelGenerator {
@@ -26,8 +29,23 @@ public class ExcelGenerator {
     private QueryTableService queryTableService;
 
     private String getQuery(String tableName){
+        List<String> selectedColumnsList=new ArrayList<>();
+
         QueryTable queryTable =queryTableService.findByName(tableName);
-        return queryTable.getQuery();
+
+        List<QueryColumn> columnsList = queryTable.getColumnsList();
+        List<Fxy> columnsFxyList = fxyService.getTableDisplayColumn(tableName)
+                                                .stream()
+                                                .filter(column -> "O".equals(column.getY3()))
+                                                .toList();
+        for (QueryColumn queryColumn : columnsList){
+            for (Fxy fxy : columnsFxyList) {
+                if(queryColumn.getName().equals(fxy.getX3())){
+                    selectedColumnsList.add(queryColumn.getContent()+ " "+fxy.getY1());
+                }
+            }
+        }
+         return  "Select " + String.join(",", selectedColumnsList) + " From " + queryTable.getTables() + " Where " + queryTable.getCondition() ;
     }
 
     private List<Map<String,Object>> getObjectList(String tableName,Map<String,String> filteredColumns){
@@ -35,7 +53,11 @@ public class ExcelGenerator {
         for (Map.Entry<String,String> filteredColumn : filteredColumns.entrySet()) {
             query =query.replace("#"+filteredColumn.getKey()+"#",filteredColumn.getValue());
         }
-        return  dynamicService.executeDynamicSql(query);
+        try {
+            return  dynamicService.executeDynamicSql(query);
+        }catch (Exception e){
+            return null;
+        }
     }
     public List<byte[]> generateFile(String tableName,Map<String,String> filteredColumns) {
 
@@ -45,7 +67,7 @@ public class ExcelGenerator {
         Row row;
         List<byte[]> excelBytesList = new ArrayList<>();
 
-        if (!objectList.isEmpty()) {
+        if (objectList!=null && !objectList.isEmpty()) {
 
             try {
                 Workbook workbook = new XSSFWorkbook();

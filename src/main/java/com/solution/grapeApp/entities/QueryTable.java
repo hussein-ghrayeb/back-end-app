@@ -22,9 +22,6 @@ public class QueryTable {
     @Column(name = "name")
     private String name;
 
-    @Column(name="descriptor")
-    private String descriptor;
-
     @Column(name="tables")
     private String tables;
 
@@ -33,16 +30,5 @@ public class QueryTable {
 
     @OneToMany(mappedBy = "queryTable",fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QueryColumn> columnsList;
-
-    public String getSelectedColumns(){
-       return columnsList.stream()
-               .filter(QueryColumn::getActive)  // Add the condition here
-               .map(column -> column.getContent() + " " + column.getName())
-               .collect(Collectors.joining(", "));
-    }
-
-    public String getQuery() {
-        return  "Select " + getSelectedColumns() + " From " + tables + " Where " + condition ;
-    }
 
 }
