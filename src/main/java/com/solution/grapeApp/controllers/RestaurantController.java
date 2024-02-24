@@ -1,6 +1,5 @@
 package com.solution.grapeApp.controllers;
 
-
 import com.solution.grapeApp.entities.Restaurant;
 import com.solution.grapeApp.services.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ public class RestaurantController {
 
     @Autowired
     RestaurantService restaurantService;
+
     @GetMapping("/getAllRestaurants")
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
         return ResponseEntity.ok(restaurantService.getAllRestaurants());
@@ -33,6 +33,7 @@ public class RestaurantController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PostMapping("/saveRestaurant")
     public ResponseEntity<Restaurant> saveRestaurant(@RequestBody Restaurant restaurant) {
         try {
@@ -61,6 +62,5 @@ public class RestaurantController {
     public ResponseEntity<List<Restaurant>> getAllItRestaurants(@RequestParam String name) {
         return ResponseEntity.ok(restaurantService.findRestaurantsByName(name));
     }
-
 
 }

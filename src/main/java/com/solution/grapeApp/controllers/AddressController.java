@@ -1,6 +1,5 @@
 package com.solution.grapeApp.controllers;
 
-
 import com.solution.grapeApp.entities.Address;
 import com.solution.grapeApp.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ public class AddressController {
 
     @Autowired
     AddressService addressService;
+
     @GetMapping("/getAllAddresses")
     public ResponseEntity<List<Address>> getAllAddresses() {
         return ResponseEntity.ok(addressService.getAllAddresses());
@@ -33,6 +33,7 @@ public class AddressController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PostMapping("/saveAddress")
     public ResponseEntity<Address> saveAddress(@RequestBody Address address) {
         try {
@@ -61,6 +62,5 @@ public class AddressController {
     public ResponseEntity<List<Address>> getAddressesByCustomerId(@RequestParam String customerId) {
         return ResponseEntity.ok(addressService.getAddressesByCustomerId(customerId));
     }
-
 
 }

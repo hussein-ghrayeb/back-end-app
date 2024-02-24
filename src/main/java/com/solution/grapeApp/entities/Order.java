@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="orders")
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -38,7 +38,7 @@ public class Order {
     @Column(name = "in_store_pickup")
     private Boolean inStorePickup;
 
-    @Column(name="delivery_instruction")
+    @Column(name = "delivery_instruction")
     private String deliveryInstruction;
 
     @ManyToOne
@@ -48,13 +48,9 @@ public class Order {
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
-    
+
     @ManyToMany
-    @JoinTable(
-            name = "order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
+    @JoinTable(name = "order_product", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> products = new HashSet<>();
 
 }

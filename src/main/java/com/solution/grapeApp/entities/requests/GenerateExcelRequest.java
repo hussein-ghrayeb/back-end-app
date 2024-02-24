@@ -12,6 +12,6 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GenerateExcelRequest {
-    private  String tableName;
-    private Map<String,String> filteredColumns;
+    private String tableName;
+    private Map<String, String> filteredColumns;
 }

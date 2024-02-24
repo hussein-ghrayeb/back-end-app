@@ -23,9 +23,11 @@ public class FxyController {
 
     @Autowired
     private FxyDescService fxyDescService;
+
     @PostMapping("/getFxyList")
     public ResponseEntity<List<Fxy>> getFxyList(@RequestBody GetFxyListRequest request) {
-        return ResponseEntity.ok(fxyService.getFxyList(request.getName(),request.getModel(),request.getX1(),request.getX2(),request.getX3()));
+        return ResponseEntity.ok(fxyService.getFxyList(request.getName(), request.getModel(), request.getX1(),
+                request.getX2(), request.getX3()));
     }
 
     @PostMapping("/saveFxyList")
@@ -40,7 +42,7 @@ public class FxyController {
 
     @PostMapping("/getFxyDesc")
     public ResponseEntity<FxyDesc> getFxyDesc(@RequestBody GetFxyDescRequest request) {
-        return ResponseEntity.ok(fxyDescService.findByNameAndModel(request.getName(),request.getModel()));
+        return ResponseEntity.ok(fxyDescService.findByNameAndModel(request.getName(), request.getModel()));
     }
 
     @PostMapping("/saveFxyDesc")

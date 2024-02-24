@@ -13,4 +13,3 @@ public class GetFxyDescRequest {
     private String name;
     private String model;
 }
-

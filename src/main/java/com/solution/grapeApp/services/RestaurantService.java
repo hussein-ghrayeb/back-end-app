@@ -12,25 +12,29 @@ import java.util.Optional;
 public class RestaurantService {
     @Autowired
     private RestaurantRepository repository;
-    public List<Restaurant> getAllRestaurants(){
-        return  repository.findAll();
+
+    public List<Restaurant> getAllRestaurants() {
+        return repository.findAll();
     }
-    public Optional<Restaurant> getRestaurantById(String id){
-        return  repository.findById(id);
+
+    public Optional<Restaurant> getRestaurantById(String id) {
+        return repository.findById(id);
     }
-    public Restaurant saveRestaurant(Restaurant  restaurant){
+
+    public Restaurant saveRestaurant(Restaurant restaurant) {
         return repository.save(restaurant);
     }
-    public void deleteRestaurantById(String id){
+
+    public void deleteRestaurantById(String id) {
         repository.deleteById(id);
     }
-    public Boolean isRestaurantExists(String id){
+
+    public Boolean isRestaurantExists(String id) {
         return repository.existsById(id);
     }
 
-    public List<Restaurant> findRestaurantsByName(String name){
-        return  repository.findRestaurantsByName(name);
+    public List<Restaurant> findRestaurantsByName(String name) {
+        return repository.findRestaurantsByName(name);
     }
-
 
 }

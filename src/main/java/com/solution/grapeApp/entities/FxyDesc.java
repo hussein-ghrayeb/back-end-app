@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="fxy_desc")
+@Table(name = "fxy_desc")
 public class FxyDesc {
 
     @Id

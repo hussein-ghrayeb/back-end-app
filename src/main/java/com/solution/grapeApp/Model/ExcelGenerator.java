@@ -28,46 +28,48 @@ public class ExcelGenerator {
     @Autowired
     private QueryTableService queryTableService;
 
-    private String getQuery(String tableName){
-        List<String> selectedColumnsList=new ArrayList<>();
+    private String getQuery(String tableName) {
+        List<String> selectedColumnsList = new ArrayList<>();
 
-        QueryTable queryTable =queryTableService.findByName(tableName);
+        QueryTable queryTable = queryTableService.findByName(tableName);
 
         List<QueryColumn> columnsList = queryTable.getColumnsList();
         List<Fxy> columnsFxyList = fxyService.getTableDisplayColumn(tableName)
-                                                .stream()
-                                                .filter(column -> "O".equals(column.getY3()))
-                                                .toList();
-        for (QueryColumn queryColumn : columnsList){
+                .stream()
+                .filter(column -> "O".equals(column.getY3()))
+                .toList();
+        for (QueryColumn queryColumn : columnsList) {
             for (Fxy fxy : columnsFxyList) {
-                if(queryColumn.getName().equals(fxy.getX3())){
-                    selectedColumnsList.add(queryColumn.getContent()+ " "+fxy.getY1());
+                if (queryColumn.getName().equals(fxy.getX3())) {
+                    selectedColumnsList.add(queryColumn.getContent() + " " + fxy.getY1());
                 }
             }
         }
-         return  "Select " + String.join(",", selectedColumnsList) + " From " + queryTable.getTables() + " Where " + queryTable.getCondition() ;
+        return "Select " + String.join(",", selectedColumnsList) + " From " + queryTable.getTables() + " Where "
+                + queryTable.getCondition();
     }
 
-    private List<Map<String,Object>> getObjectList(String tableName,Map<String,String> filteredColumns){
+    private List<Map<String, Object>> getObjectList(String tableName, Map<String, String> filteredColumns) {
         String query = getQuery(tableName);
-        for (Map.Entry<String,String> filteredColumn : filteredColumns.entrySet()) {
-            query =query.replace("#"+filteredColumn.getKey()+"#",filteredColumn.getValue());
+        for (Map.Entry<String, String> filteredColumn : filteredColumns.entrySet()) {
+            query = query.replace("#" + filteredColumn.getKey() + "#", filteredColumn.getValue());
         }
         try {
-            return  dynamicService.executeDynamicSql(query);
-        }catch (Exception e){
+            return dynamicService.executeDynamicSql(query);
+        } catch (Exception e) {
             return null;
         }
     }
-    public List<byte[]> generateFile(String tableName,Map<String,String> filteredColumns) {
 
-        List<Map<String,Object>> objectList =getObjectList(tableName,filteredColumns);
-        int cellNumber =0;
-        int rowNumber  =0;
+    public List<byte[]> generateFile(String tableName, Map<String, String> filteredColumns) {
+
+        List<Map<String, Object>> objectList = getObjectList(tableName, filteredColumns);
+        int cellNumber = 0;
+        int rowNumber = 0;
         Row row;
         List<byte[]> excelBytesList = new ArrayList<>();
 
-        if (objectList!=null && !objectList.isEmpty()) {
+        if (objectList != null && !objectList.isEmpty()) {
 
             try {
                 Workbook workbook = new XSSFWorkbook();
@@ -97,9 +99,9 @@ public class ExcelGenerator {
                     cellNumber++;
                 }
 
-                for (Map<String,Object> map : objectList){
+                for (Map<String, Object> map : objectList) {
                     cellNumber = 0;
-                    rowNumber ++;
+                    rowNumber++;
                     row = sheet.createRow(rowNumber);
                     for (Object columns : map.values()) {
                         row.createCell(cellNumber).setCellValue(String.valueOf(columns));

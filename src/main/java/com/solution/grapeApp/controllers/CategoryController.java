@@ -12,9 +12,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/Category")
-public class CategoryController{
+public class CategoryController {
     @Autowired
     CategoryService categoryService;
+
     @GetMapping("/getAllCategories")
     public ResponseEntity<List<Category>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());

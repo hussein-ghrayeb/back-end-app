@@ -17,38 +17,40 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="customers")
+@Table(name = "customers")
 public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name="first_name")
-    private String firstName;
+    @Column(name = "full_name")
+    private String fullName;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name="last_name")
-    private String lastName;
-
-    @Column(name="phone_number")
+    @Column(name = "phone_number")
     private String username;
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "has_default_address", columnDefinition = "tinyint(1) default 0")
+    private Boolean hasDefaultAddress;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
-    @OneToMany(mappedBy = "customer",fetch =FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "customer",fetch =FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

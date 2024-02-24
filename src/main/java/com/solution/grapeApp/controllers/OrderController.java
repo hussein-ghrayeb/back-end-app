@@ -1,6 +1,5 @@
 package com.solution.grapeApp.controllers;
 
-
 import com.solution.grapeApp.entities.Order;
 import com.solution.grapeApp.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
+
     @GetMapping("/getAllOrders")
     public ResponseEntity<List<Order>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());

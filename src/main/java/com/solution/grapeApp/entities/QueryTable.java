@@ -1,6 +1,5 @@
 package com.solution.grapeApp.entities;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,20 +14,20 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="query_table")
+@Table(name = "query_table")
 public class QueryTable {
 
     @Id
     @Column(name = "name")
     private String name;
 
-    @Column(name="tables")
+    @Column(name = "tables")
     private String tables;
 
-    @Column(name="where_condition",length = 1000)
+    @Column(name = "where_condition", length = 1000)
     private String condition;
 
-    @OneToMany(mappedBy = "queryTable",fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "queryTable", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QueryColumn> columnsList;
 
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,String> {
+public interface ProductRepository extends JpaRepository<Product, String> {
      List<Product> findProductsByCategoryId(String categoryId);
 
      @Query(value = "Select p From Product p Where p.arabicName like %:name% Or p.englishName like %:name% ")

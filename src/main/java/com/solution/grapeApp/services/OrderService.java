@@ -12,24 +12,28 @@ import java.util.Optional;
 public class OrderService {
     @Autowired
     private OrderRepository repository;
-    public List<Order> getAllOrders(){
-        return  repository.findAll();
-    }
-    public Optional<Order> getOrderById(String id){
-        return  repository.findById(id);
+
+    public List<Order> getAllOrders() {
+        return repository.findAll();
     }
 
-    public Order saveOrder(Order  order){
+    public Optional<Order> getOrderById(String id) {
+        return repository.findById(id);
+    }
+
+    public Order saveOrder(Order order) {
         return repository.save(order);
     }
-    public void deleteOrderById(String id){
+
+    public void deleteOrderById(String id) {
         repository.deleteById(id);
     }
-    public Boolean isOrderExists(String id){
+
+    public Boolean isOrderExists(String id) {
         return repository.existsById(id);
     }
 
-    public List<Order> findOrdersByCustomerId(String customerId){
-        return  repository.findOrderByCustomerId(customerId);
+    public List<Order> findOrdersByCustomerId(String customerId) {
+        return repository.findOrderByCustomerId(customerId);
     }
 }

@@ -12,25 +12,28 @@ import java.util.Optional;
 public class AddressService {
     @Autowired
     private AddressRepository repository;
-    public List<Address> getAllAddresses(){
-        return  repository.findAll();
+
+    public List<Address> getAllAddresses() {
+        return repository.findAll();
     }
-    public Optional<Address> getAddressById(String id){
-        return  repository.findById(id);
+
+    public Optional<Address> getAddressById(String id) {
+        return repository.findById(id);
     }
-    public Address saveAddress(Address  address){
+
+    public Address saveAddress(Address address) {
         return repository.save(address);
     }
-    public void deleteAddressById(String id){
+
+    public void deleteAddressById(String id) {
         repository.deleteById(id);
     }
-    public Boolean isAddressExists(String id){
+
+    public Boolean isAddressExists(String id) {
         return repository.existsById(id);
     }
 
-    public List<Address> getAddressesByCustomerId(String customerId){
+    public List<Address> getAddressesByCustomerId(String customerId) {
         return repository.findAddressByCustomerId(customerId);
     }
 }
-
-

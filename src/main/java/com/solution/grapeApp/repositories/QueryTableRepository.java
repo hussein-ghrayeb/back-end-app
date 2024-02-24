@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface QueryTableRepository extends JpaRepository<QueryTable,String>{
+public interface QueryTableRepository extends JpaRepository<QueryTable, String> {
     public QueryTable findByName(String name);
 }

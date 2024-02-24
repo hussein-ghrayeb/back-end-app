@@ -14,21 +14,21 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="category")
+@Table(name = "category")
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name="ar_name",unique = true)
+    @Column(name = "ar_name", unique = true)
     private String arabicName;
 
-    @Column(name="en_name",unique = true)
+    @Column(name = "en_name", unique = true)
     private String englishName;
 
     @ManyToOne
-    @JoinColumn(name="restaurant_id")
+    @JoinColumn(name = "restaurant_id")
     @JsonIgnore
     private Restaurant restaurant;
 

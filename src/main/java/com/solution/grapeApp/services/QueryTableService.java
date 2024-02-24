@@ -10,7 +10,7 @@ public class QueryTableService {
     @Autowired
     private QueryTableRepository repository;
 
-    public QueryTable findByName(String tableName){
-        return  repository.findByName(tableName);
+    public QueryTable findByName(String tableName) {
+        return repository.findByName(tableName);
     }
 }

@@ -15,41 +15,41 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="product")
+@Table(name = "product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name="barcode")
+    @Column(name = "barcode")
     private String barcode;
 
-    @Column(name="ar_name")
+    @Column(name = "ar_name")
     private String arabicName;
 
-    @Column(name="en_name")
+    @Column(name = "en_name")
     private String englishName;
 
-    @Column(name="ar_desc")
+    @Column(name = "ar_desc")
     private String arabicDescription;
 
-    @Column(name="en_desc")
+    @Column(name = "en_desc")
     private String englishDescription;
 
-    @Column(name="price")
+    @Column(name = "price")
     private Double price;
 
-    @Column(name="shelf_available")
+    @Column(name = "shelf_available")
     private Float shelfAvailable;
 
-    @Column(name="stock_available")
+    @Column(name = "stock_available")
     private Float stockAvailable;
 
-    @Column(name="is_favorite")
+    @Column(name = "is_favorite")
     private Boolean isFavorite;
 
-    @Column(name="image_url")
+    @Column(name = "image_url")
     private String imageUrl;
 
     @ManyToOne

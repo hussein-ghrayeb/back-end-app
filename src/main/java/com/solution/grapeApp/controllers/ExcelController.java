@@ -16,7 +16,7 @@ public class ExcelController {
     public ExcelGenerator excelGenerator;
 
     @PostMapping(value = "generateExcel")
-    public ResponseEntity<List<byte[]>> generateExcel(@RequestBody GenerateExcelRequest request){
-        return ResponseEntity.ok(excelGenerator.generateFile(request.getTableName(),request.getFilteredColumns()));
+    public ResponseEntity<List<byte[]>> generateExcel(@RequestBody GenerateExcelRequest request) {
+        return ResponseEntity.ok(excelGenerator.generateFile(request.getTableName(), request.getFilteredColumns()));
     }
 }

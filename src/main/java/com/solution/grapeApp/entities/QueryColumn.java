@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="query_column")
+@Table(name = "query_column")
 public class QueryColumn {
 
     @Id
@@ -21,7 +21,7 @@ public class QueryColumn {
 
     @Id
     @ManyToOne
-    @JoinColumn(name="query_table")
+    @JoinColumn(name = "query_table")
     @JsonIgnore
     private QueryTable queryTable;
 

@@ -11,12 +11,12 @@ public class FxyDescService {
     @Autowired
     private FxyDescRepository repository;
 
-    public void saveFxyDesc(FxyDesc fxyDesc){
+    public void saveFxyDesc(FxyDesc fxyDesc) {
         repository.save(fxyDesc);
     }
 
-    public FxyDesc findByNameAndModel(String name,String model){
-        return repository.findByNameAndModel(name,model);
+    public FxyDesc findByNameAndModel(String name, String model) {
+        return repository.findByNameAndModel(name, model);
     }
 
 }

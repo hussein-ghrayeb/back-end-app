@@ -3,6 +3,8 @@ package com.solution.grapeApp.config;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.solution.grapeApp.entities.Customer;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,7 +30,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(Customer userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
@@ -39,8 +41,7 @@ public class JwtService {
 
     public String generateToken(
             Map<String, Object> extraClaims,
-            UserDetails userDetails
-    ) {
+            Customer userDetails) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -48,6 +49,8 @@ public class JwtService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(new Date().getTime() + 24 * 60 * 60 * 1000))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .claim("userId", userDetails.getId())
+                .claim("hasDefaultAddress", userDetails.getHasDefaultAddress())
                 .compact();
     }
 
@@ -74,4 +77,3 @@ public class JwtService {
     }
 
 }
-

@@ -16,23 +16,23 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="restaurant")
+@Table(name = "restaurant")
 public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name="ar_name")
+    @Column(name = "ar_name")
     private String arabicName;
 
-    @Column(name="en_name")
+    @Column(name = "en_name")
     private String englishName;
 
-    @Column(name="ar_desc")
+    @Column(name = "ar_desc")
     private String arabicDescription;
 
-    @Column(name="en_desc")
+    @Column(name = "en_desc")
     private String englishDescription;
 
     @Column(name = "opening_time")
@@ -47,7 +47,7 @@ public class Restaurant {
     @Column(name = "closing_day")
     private Set<DaysOfWeek> closingDays;
 
-    @OneToMany(mappedBy = "restaurant",fetch =FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> categories;
 
 }
