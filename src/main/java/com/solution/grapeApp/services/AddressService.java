@@ -21,8 +21,16 @@ public class AddressService {
         return repository.findById(id);
     }
 
+    public List<Address> getDefaultAddress(String userId) {
+        return repository.findDefaultAddressByCustomerId(userId);
+    }
+
     public Address saveAddress(Address address) {
         return repository.save(address);
+    }
+
+    public int checkDefaultAddressesCount() {
+        return repository.checkDefaultAddressesCount();
     }
 
     public void deleteAddressById(String id) {
@@ -31,6 +39,10 @@ public class AddressService {
 
     public Boolean isAddressExists(String id) {
         return repository.existsById(id);
+    }
+
+    public void setAsDefault(String id) {
+        repository.setAsDefault(id);
     }
 
     public List<Address> getAddressesByCustomerId(String customerId) {

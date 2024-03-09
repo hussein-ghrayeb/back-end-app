@@ -24,7 +24,7 @@ public class AuthService {
         } else {
             if (request.getPassword().equals(user.get().getPassword())) {
                 var jwtToken = jwtService.generateToken(user.get());
-                return AuthenticationResponse.builder().token(jwtToken)
+                return AuthenticationResponse.builder().token(jwtToken).customer(user.get())
                         .message("User Logged In Successfully").build();
             } else {
                 return AuthenticationResponse.builder().message("Wrong username or password").build();

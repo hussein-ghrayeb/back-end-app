@@ -1,6 +1,10 @@
 package com.solution.grapeApp.controllers;
 
 import com.solution.grapeApp.entities.Order;
+import com.solution.grapeApp.entities.OrderProduct;
+import com.solution.grapeApp.entities.requests.OrderDTO;
+import com.solution.grapeApp.repositories.OrderProductRepository;
+import com.solution.grapeApp.repositories.ProductRepository;
 import com.solution.grapeApp.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +20,12 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    OrderProductRepository orderProductRepository;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @GetMapping("/getAllOrders")
     public ResponseEntity<List<Order>> getAllOrders() {
@@ -40,11 +50,18 @@ public class OrderController {
     }
 
     @PostMapping("/saveOrder")
-    public ResponseEntity<Order> saveOrder(@RequestBody Order order) {
+    public ResponseEntity<Order> saveOrder(@RequestBody OrderDTO orderDTO) {
         try {
-            Order savedOrder = orderService.saveOrder(order);
+            Order savedOrder = orderService.saveOrder(orderDTO.getOrder());
+            if (savedOrder.getId() != null) {
+                orderDTO.getProducts().forEach(product -> {
+                    orderProductRepository.save(new OrderProduct(product.getCount(), product.getProduct(), savedOrder));
+                    productRepository.updateProductStock(product.getCount(), product.getProduct().getId());
+                });
+            }
             return ResponseEntity.ok(savedOrder);
         } catch (Exception e) {
+            System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

@@ -1,5 +1,7 @@
 package com.solution.grapeApp.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,9 @@ public class CustomerService {
 
     public Customer saveCustomer(Customer customer) {
         return customerRepository.save(customer);
+    }
+
+    public Optional<Customer> getCustomerById(String id) {
+        return customerRepository.findById(id);
     }
 }

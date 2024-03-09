@@ -49,7 +49,23 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/deleteProduct")
+    @PutMapping("/updateProduct")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
+        try {
+            Optional<Product> optional = productService.getProductById(product.getId());
+            if (optional.isPresent()) {
+                product.setCategory(optional.get().getCategory());
+                Product savedProduct = productService.saveProduct(product);
+                return ResponseEntity.ok(savedProduct);
+            } else {
+                return ResponseEntity.notFound().build(); // 404 Not Found
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DeleteMapping("/deleteProduct")
     public ResponseEntity<Void> deleteProduct(@RequestParam String id) {
         try {
             if (productService.isProductExists(id)) {

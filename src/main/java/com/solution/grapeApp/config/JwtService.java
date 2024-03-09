@@ -49,8 +49,6 @@ public class JwtService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(new Date().getTime() + 24 * 60 * 60 * 1000))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .claim("userId", userDetails.getId())
-                .claim("hasDefaultAddress", userDetails.getHasDefaultAddress())
                 .compact();
     }
 

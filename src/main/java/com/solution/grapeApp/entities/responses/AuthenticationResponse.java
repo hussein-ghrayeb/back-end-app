@@ -1,5 +1,7 @@
 package com.solution.grapeApp.entities.responses;
 
+import com.solution.grapeApp.entities.Customer;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,5 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationResponse {
     private String token;
+    private Customer customer;
     private String message;
 }

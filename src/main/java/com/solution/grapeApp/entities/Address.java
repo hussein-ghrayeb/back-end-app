@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "address")
+@Table(name = "addresses")
 public class Address {
 
     @Id
@@ -25,8 +25,8 @@ public class Address {
     @Column(name = "latitude")
     private double latitude;
 
-    @Column(name = "is_default", columnDefinition = "tinyint(1) default 1")
-    private Boolean isDefault;
+    @Column(name = "is_default")
+    private Boolean isDefault = false;
 
     @Column(name = "address_area")
     private String addressArea;
@@ -34,7 +34,7 @@ public class Address {
     @Column(name = "additional_info")
     private String additionalInfo;
 
-    @ManyToOne
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 }

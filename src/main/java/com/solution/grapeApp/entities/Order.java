@@ -1,5 +1,6 @@
 package com.solution.grapeApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.solution.grapeApp.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,8 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -27,30 +28,27 @@ public class Order {
     private double totalPrice;
 
     @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    private LocalDateTime orderDate = LocalDateTime.now();
 
     @Column(name = "details")
     private String details;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
-
-    @Column(name = "in_store_pickup")
-    private Boolean inStorePickup;
+    private OrderStatus status = OrderStatus.CREATED;
 
     @Column(name = "delivery_instruction")
     private String deliveryInstruction;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @OneToOne
-    @JoinColumn(name = "address_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @ManyToMany
-    @JoinTable(name = "order_product", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")
+    @JsonIgnore
+    private List<OrderProduct> ordersProducts = new ArrayList();
 
 }

@@ -1,13 +1,18 @@
 package com.solution.grapeApp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.solution.grapeApp.entities.responses.CustomerFavoriteProduct;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -15,7 +20,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "product")
+@Table(name = "products")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Product {
 
     @Id
@@ -47,16 +53,24 @@ public class Product {
     private Float stockAvailable;
 
     @Column(name = "is_favorite")
-    private Boolean isFavorite;
+    private Boolean isFavorite = false;
+
+    @Column(name = "is_out_of_stock")
+    private Boolean isOutOfStock;
 
     @Column(name = "image_url")
     private String imageUrl;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     @JsonIgnore
     private Category category;
 
-    @ManyToMany(mappedBy = "products")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     @JsonIgnore
-    private Set<Order> orders = new HashSet<>();
+    private List<OrderProduct> ordersProducts = new ArrayList();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
+    @JsonIgnore
+    private List<CustomerFavoriteProduct> customerFavoriteProducts = new ArrayList();
 }

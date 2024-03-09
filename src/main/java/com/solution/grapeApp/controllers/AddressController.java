@@ -1,7 +1,10 @@
 package com.solution.grapeApp.controllers;
 
 import com.solution.grapeApp.entities.Address;
+import com.solution.grapeApp.entities.Customer;
 import com.solution.grapeApp.services.AddressService;
+import com.solution.grapeApp.services.CustomerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,9 @@ public class AddressController {
 
     @Autowired
     AddressService addressService;
+
+    @Autowired
+    CustomerService customerService;
 
     @GetMapping("/getAllAddresses")
     public ResponseEntity<List<Address>> getAllAddresses() {
@@ -37,14 +43,41 @@ public class AddressController {
     @PostMapping("/saveAddress")
     public ResponseEntity<Address> saveAddress(@RequestBody Address address) {
         try {
+            if (addressService.checkDefaultAddressesCount() == 0) {
+                address.setIsDefault(true);
+            }
             Address savedAddress = addressService.saveAddress(address);
+            Optional<Customer> customerOptional = customerService
+                    .getCustomerById(address.getCustomer().getId());
+            if (!customerOptional.get().getHasDefaultAddress()) {
+                customerOptional.get().setHasDefaultAddress(true);
+                customerService.saveCustomer(customerOptional.get());
+            }
             return ResponseEntity.ok(savedAddress);
         } catch (Exception e) {
+            System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GetMapping("/deleteAddress")
+    @PutMapping("/setAsDefaultAddress")
+    public ResponseEntity<?> setAsDefault(@RequestParam String id) {
+        try {
+            Optional<Address> optionalAddress = addressService.getAddressById(id);
+
+            if (optionalAddress.isPresent()) {
+                addressService.setAsDefault(id);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DeleteMapping("/deleteAddress")
     public ResponseEntity<Void> deleteAddress(@RequestParam String id) {
         try {
             if (addressService.isAddressExists(id)) {
@@ -61,6 +94,14 @@ public class AddressController {
     @GetMapping("/getAddressesByCustomerId")
     public ResponseEntity<List<Address>> getAddressesByCustomerId(@RequestParam String customerId) {
         return ResponseEntity.ok(addressService.getAddressesByCustomerId(customerId));
+    }
+
+    @GetMapping("/getDefaultAddressByCustomerId")
+    public ResponseEntity<Address> getDefaultAddressByCustomerId(@RequestParam String customerId) {
+        if (addressService.getDefaultAddress(customerId).size() > 0)
+            return ResponseEntity.ok(addressService.getDefaultAddress(customerId).get(0));
+        else
+            return ResponseEntity.noContent().build();
     }
 
 }
