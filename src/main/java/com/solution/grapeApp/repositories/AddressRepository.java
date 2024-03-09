@@ -24,6 +24,11 @@ public interface AddressRepository extends JpaRepository<Address, String> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE addresses SET is_default = CASE id WHEN :id then true ELSE false END where customer_id = :customerId", nativeQuery = true)
-    public void setAsDefault(String id, String customerId);
+    @Query(value = "UPDATE addresses SET is_default = CASE id WHEN :id then true ELSE false END", nativeQuery = true)
+    public void setAsDefault(String id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE addresses SET is_default = true where customer_id = :customerId and id = (SELECT id from addresses where customer_id = :customerId ORDER BY RAND() LIMIt 1)", nativeQuery = true)
+    public void setRandomDefaultAddress(String customerId);
 }

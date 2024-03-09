@@ -41,8 +41,12 @@ public class AddressService {
         return repository.existsById(id);
     }
 
-    public void setAsDefault(String id, String customerId) {
-        repository.setAsDefault(id, customerId);
+    public void setAsDefault(String id) {
+        repository.setAsDefault(id);
+    }
+
+    public void setRandomDefaultAddress(String customerId) {
+        repository.setRandomDefaultAddress(customerId);
     }
 
     public List<Address> getAddressesByCustomerId(String customerId) {

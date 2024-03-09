@@ -66,7 +66,7 @@ public class AddressController {
             Optional<Address> optionalAddress = addressService.getAddressById(id);
 
             if (optionalAddress.isPresent()) {
-                addressService.setAsDefault(id, optionalAddress.get().getId());
+                addressService.setAsDefault(id);
                 return ResponseEntity.ok().build();
             } else {
                 return ResponseEntity.notFound().build();
@@ -82,6 +82,9 @@ public class AddressController {
         try {
             Optional<Address> optionalAddress = addressService.getAddressById(id);
             if (optionalAddress.isPresent()) {
+                if (optionalAddress.get().getIsDefault()) {
+                    addressService.setRandomDefaultAddress(optionalAddress.get().getId());
+                }
                 addressService.deleteAddressById(id);
                 return ResponseEntity.ok().build();
             } else {
