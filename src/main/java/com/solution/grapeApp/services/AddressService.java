@@ -29,8 +29,8 @@ public class AddressService {
         return repository.save(address);
     }
 
-    public int checkDefaultAddressesCount() {
-        return repository.checkDefaultAddressesCount();
+    public int checkDefaultAddressesCount(String customerId) {
+        return repository.checkDefaultAddressesCount(customerId);
     }
 
     public void deleteAddressById(String id) {
@@ -41,8 +41,8 @@ public class AddressService {
         return repository.existsById(id);
     }
 
-    public void setAsDefault(String id) {
-        repository.setAsDefault(id);
+    public void setAsDefault(String id, String customerId) {
+        repository.setAsDefault(id, customerId);
     }
 
     public List<Address> getAddressesByCustomerId(String customerId) {

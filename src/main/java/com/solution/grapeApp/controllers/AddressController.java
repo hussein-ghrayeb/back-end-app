@@ -43,7 +43,7 @@ public class AddressController {
     @PostMapping("/saveAddress")
     public ResponseEntity<Address> saveAddress(@RequestBody Address address) {
         try {
-            if (addressService.checkDefaultAddressesCount() == 0) {
+            if (addressService.checkDefaultAddressesCount(address.getCustomer().getId()) == 0) {
                 address.setIsDefault(true);
             }
             Address savedAddress = addressService.saveAddress(address);
@@ -66,7 +66,7 @@ public class AddressController {
             Optional<Address> optionalAddress = addressService.getAddressById(id);
 
             if (optionalAddress.isPresent()) {
-                addressService.setAsDefault(id);
+                addressService.setAsDefault(id, optionalAddress.get().getId());
                 return ResponseEntity.ok().build();
             } else {
                 return ResponseEntity.notFound().build();
@@ -80,7 +80,8 @@ public class AddressController {
     @DeleteMapping("/deleteAddress")
     public ResponseEntity<Void> deleteAddress(@RequestParam String id) {
         try {
-            if (addressService.isAddressExists(id)) {
+            Optional<Address> optionalAddress = addressService.getAddressById(id);
+            if (optionalAddress.isPresent()) {
                 addressService.deleteAddressById(id);
                 return ResponseEntity.ok().build();
             } else {

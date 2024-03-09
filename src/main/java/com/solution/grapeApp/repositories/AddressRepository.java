@@ -19,11 +19,11 @@ public interface AddressRepository extends JpaRepository<Address, String> {
     @Query(value = "SELECT a.* FROM addresses a WHERE a.is_default = true and a.customer_id = :customerId", nativeQuery = true)
     public List<Address> findDefaultAddressByCustomerId(String customerId);
 
-    @Query(value = "SELECT count(*) FROM addresses WHERE is_default = true", nativeQuery = true)
-    public int checkDefaultAddressesCount();
+    @Query(value = "SELECT count(*) FROM addresses WHERE is_default = true and customer_id = :customerId", nativeQuery = true)
+    public int checkDefaultAddressesCount(String customerId);
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE addresses SET is_default = CASE id WHEN :id then true ELSE false END", nativeQuery = true)
-    public void setAsDefault(String id);
+    @Query(value = "UPDATE addresses SET is_default = CASE id WHEN :id then true ELSE false END where customer_id = :customerId", nativeQuery = true)
+    public void setAsDefault(String id, String customerId);
 }
