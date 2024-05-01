@@ -1,6 +1,8 @@
 package com.solution.grapeApp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.solution.grapeApp.entities.responses.CustomerFavoriteProduct;
 
@@ -40,7 +42,7 @@ public class Product {
     @Column(name = "ar_desc")
     private String arabicDescription;
 
-    @Column(name = "en_desc")
+    @Column(name = "en_desc", columnDefinition = "text")
     private String englishDescription;
 
     @Column(name = "price")
@@ -56,21 +58,28 @@ public class Product {
     private Boolean isFavorite = false;
 
     @Column(name = "is_out_of_stock")
-    private Boolean isOutOfStock;
+    private Boolean isOutOfStock = false;
 
     @Column(name = "image_url")
     private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Category category;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     @JsonIgnore
-    private List<OrderProduct> ordersProducts = new ArrayList();
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
-    @JsonIgnore
     private List<CustomerFavoriteProduct> customerFavoriteProducts = new ArrayList();
+
+    public Product(String englishName, String englishDescription, Float shelfAvailable, Float stockAvailable,
+            Double price, String imageUrl, Category category) {
+        this.englishName = englishName;
+        this.englishDescription = englishDescription;
+        this.shelfAvailable = shelfAvailable;
+        this.price = price;
+        this.category = category;
+        this.imageUrl = imageUrl;
+        this.stockAvailable = stockAvailable;
+    }
 }

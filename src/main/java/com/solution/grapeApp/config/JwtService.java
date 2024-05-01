@@ -30,7 +30,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(Customer userDetails) {
+    public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
@@ -41,7 +41,7 @@ public class JwtService {
 
     public String generateToken(
             Map<String, Object> extraClaims,
-            Customer userDetails) {
+            UserDetails userDetails) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)

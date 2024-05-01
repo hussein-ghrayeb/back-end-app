@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Data
 @Builder
@@ -12,26 +14,35 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "orders_products")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class OrderProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "count")
-    private int count;
+    @Column(name = "product_count")
+    private int productCount;
+
+    @Column(name = "product_name")
+    private String productName;
+
+    @Column(name = "product_image_url")
+    private String productImageUrl;
+
+    @Column(name = "product_price")
+    private Double productPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
-
-    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JsonIgnore
     private Order order;
 
-    public OrderProduct(int count, Product product, Order order) {
-        this.count = count;
-        this.product = product;
+    public OrderProduct(int count, String productName, String imageUrl, Double price, Order order) {
+        this.productCount = count;
+        this.productName = productName;
+        this.productImageUrl = imageUrl;
+        this.productPrice = price;
         this.order = order;
     }
 

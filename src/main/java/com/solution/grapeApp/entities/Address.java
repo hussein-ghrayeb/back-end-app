@@ -1,6 +1,10 @@
 package com.solution.grapeApp.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "addresses")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Address {
 
     @Id
@@ -33,6 +38,10 @@ public class Address {
 
     @Column(name = "additional_info")
     private String additionalInfo;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "address")
+    @JsonIgnore
+    private List<Order> orders = new ArrayList();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")

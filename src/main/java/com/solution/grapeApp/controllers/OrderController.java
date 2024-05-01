@@ -50,13 +50,15 @@ public class OrderController {
     }
 
     @PostMapping("/saveOrder")
-    public ResponseEntity<Order> saveOrder(@RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<Order> saveOrder(@RequestBody Order order) {
         try {
-            Order savedOrder = orderService.saveOrder(orderDTO.getOrder());
+            Order savedOrder = orderService.saveOrder(new Order(order.getTotalPrice(), order.getDetails(),
+                    order.getCode(), order.getDeliveryInstruction(), order.getCustomer(), order.getAddress()));
             if (savedOrder.getId() != null) {
-                orderDTO.getProducts().forEach(product -> {
-                    orderProductRepository.save(new OrderProduct(product.getCount(), product.getProduct(), savedOrder));
-                    productRepository.updateProductStock(product.getCount(), product.getProduct().getId());
+                order.getProducts().forEach(product -> {
+                    orderProductRepository.save(new OrderProduct(product.getProductCount(), product.getProductName(),
+                            product.getProductImageUrl(), product.getProductPrice(), savedOrder));
+                    productRepository.updateProductStock(product.getProductCount(), product.getId());
                 });
             }
             return ResponseEntity.ok(savedOrder);
@@ -66,7 +68,7 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/deleteOrder")
+    @DeleteMapping("/deleteOrder")
     public ResponseEntity<Void> deleteOrder(@RequestParam String id) {
         try {
             if (orderService.isOrderExists(id)) {

@@ -33,6 +33,9 @@ public class Order {
     @Column(name = "details")
     private String details;
 
+    @Column(name = "code")
+    private String code;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status = OrderStatus.CREATED;
 
@@ -43,12 +46,21 @@ public class Order {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "order")
-    @JsonIgnore
-    private List<OrderProduct> ordersProducts = new ArrayList();
+    private List<OrderProduct> products = new ArrayList();
+
+    public Order(double totalPrice, String details, String code, String deliveryInstruction, Customer customer,
+            Address address) {
+        this.address = address;
+        this.totalPrice = totalPrice;
+        this.code = code;
+        this.customer = customer;
+        this.details = details;
+        this.deliveryInstruction = deliveryInstruction;
+    }
 
 }

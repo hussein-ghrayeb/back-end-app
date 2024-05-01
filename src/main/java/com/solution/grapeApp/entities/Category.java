@@ -43,4 +43,8 @@ public class Category {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "category")
     private List<Product> products = new ArrayList<>();
 
+    public Category(String englishName) {
+        this.englishName = englishName;
+    }
+
 }
