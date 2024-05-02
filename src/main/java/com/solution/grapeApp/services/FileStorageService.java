@@ -22,7 +22,8 @@ public class FileStorageService {
         this.fileStorageLocation = Paths.get(env.getProperty("app.file.upload-dir"), "/opt/uploads/files")
                 .toAbsolutePath().normalize();
         try {
-            Files.createDirectories(this.fileStorageLocation);
+            if (this.fileStorageLocation == null)
+                Files.createDirectories(this.fileStorageLocation);
         } catch (Exception ex) {
             throw new RuntimeException("Could not create the directory where the uploaded files will be stored.", ex);
         }
