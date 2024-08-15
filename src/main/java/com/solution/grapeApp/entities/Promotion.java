@@ -41,8 +41,4 @@ public class Promotion {
 
     @Column(name = "valid_to")
     private Date validTo;
-
-    @OneToOne(mappedBy = "promotion", orphanRemoval = true)
-    @JsonIgnore
-    private Notification notification;
 }

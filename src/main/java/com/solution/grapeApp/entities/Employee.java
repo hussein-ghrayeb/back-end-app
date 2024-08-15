@@ -3,6 +3,8 @@ package com.solution.grapeApp.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.solution.grapeApp.entities.responses.CustomerFavoriteProduct;
+import com.solution.grapeApp.enums.EmployeeType;
+import com.solution.grapeApp.enums.OrderStatus;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,9 +23,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "customers")
+@Table(name = "employees")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class Customer implements UserDetails {
+public class Employee implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -32,30 +34,30 @@ public class Customer implements UserDetails {
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "email")
-    private String email;
-
     @Column(name = "phone_number")
     private String username;
+
+    @Enumerated(EnumType.STRING)
+    private EmployeeType employeeType;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name = "has_default_address")
-    private Boolean hasDefaultAddress = false;
+    @Column(name = "is_available")
+    private boolean isAvailable = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "checkedBy", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Order> orders;
+    private List<Order> checkedOrders;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "deliveredBy", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Address> addresses;
+    private List<Order> deliveredOrders;
 
     @Override
     public boolean isAccountNonExpired() {

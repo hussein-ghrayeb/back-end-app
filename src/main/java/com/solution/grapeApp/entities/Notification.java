@@ -21,19 +21,18 @@ public class Notification {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "description", columnDefinition = "text")
+    private String description;
+
     @Column(name = "is_read")
     private boolean isRead = false;
 
     @Column(name = "created_on")
     private LocalDateTime createdOn = LocalDateTime.now();
 
-    @OneToOne
-    @JoinColumn(name = "promotion_id", referencedColumnName = "id")
-    private Promotion promotion;
-
-    public Notification(String title, Promotion promotion) {
+    public Notification(String title, String description) {
         this.title = title;
-        this.promotion = promotion;
+        this.description = description;
     }
 
 }

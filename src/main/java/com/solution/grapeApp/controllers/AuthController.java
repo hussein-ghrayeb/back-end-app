@@ -19,6 +19,8 @@ public class AuthController {
             @RequestBody AuthenticationRequest request) {
         if (request.getAuthType().name() == AuthType.CUSTOMER.name())
             return ResponseEntity.ok(authService.authenticateCustomer(request));
+        else if (request.getAuthType().name() == AuthType.EMPLOYEE.name())
+            return ResponseEntity.ok(authService.authenticateEmployee(request));
         return ResponseEntity.ok(authService.authenticateUser(request));
     }
 

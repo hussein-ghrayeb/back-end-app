@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.solution.grapeApp.enums.AuthType;
 import com.solution.grapeApp.services.CustomerDetailsService;
+import com.solution.grapeApp.services.EmployeeDetailsService;
 
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final EmployeeDetailsService employeeDetailsService;
     private final CustomerDetailsService customerDetailsService;
 
     @Override
@@ -42,6 +44,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UserDetails userDetails = null;
             if (request.getHeader("Auth-Type").equals("CUSTOMER")) {
                 userDetails = this.customerDetailsService.loadUserByUsername(username);
+            } else if (request.getHeader("Auth-Type").equals("EMPLOYEE")) {
+                userDetails = this.employeeDetailsService.loadUserByUsername(username);
             } else {
                 userDetails = this.userDetailsService.loadUserByUsername(username);
             }

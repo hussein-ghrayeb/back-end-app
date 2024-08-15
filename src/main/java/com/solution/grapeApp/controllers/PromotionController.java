@@ -66,7 +66,8 @@ public class PromotionController {
         try {
             Promotion savedPromotion = promotionService.savePromotion(promotion);
             if (savedPromotion.getId() != null)
-                notificationRepository.save(new Notification("Special Offer", savedPromotion));
+                notificationRepository
+                        .save(new Notification(savedPromotion.getTitle(), savedPromotion.getDescription()));
             return ResponseEntity.ok(savedPromotion);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

@@ -17,6 +17,14 @@ public class OrderService {
         return repository.findAll();
     }
 
+    public List<Order> getFirstCreatedOrder() {
+        return repository.findFirstCreatedOrder();
+    }
+
+    public List<Order> getFirstPackedOrder() {
+        return repository.findFirstPackedOrder();
+    }
+
     public Optional<Order> getOrderById(String id) {
         return repository.findById(id);
     }

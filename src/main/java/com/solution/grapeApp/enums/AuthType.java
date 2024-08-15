@@ -1,5 +1,5 @@
 package com.solution.grapeApp.enums;
 
 public enum AuthType {
-    USER, CUSTOMER
+    USER, CUSTOMER, EMPLOYEE
 }

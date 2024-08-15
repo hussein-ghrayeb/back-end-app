@@ -47,6 +47,14 @@ public class Order {
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "checked_by", referencedColumnName = "id")
+    private Employee checkedBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivered_by", referencedColumnName = "id")
+    private Employee deliveredBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 

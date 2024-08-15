@@ -35,6 +35,9 @@ public class Category {
     @Column(name = "en_name", unique = true)
     private String englishName;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     @JsonIgnore

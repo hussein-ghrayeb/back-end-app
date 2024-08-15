@@ -1,8 +1,10 @@
 package com.solution.grapeApp.controllers;
 
 import com.solution.grapeApp.entities.Category;
+import com.solution.grapeApp.entities.Notification;
 import com.solution.grapeApp.entities.Product;
 import com.solution.grapeApp.repositories.CategoryRepository;
+import com.solution.grapeApp.repositories.NotificationRepository;
 import com.solution.grapeApp.repositories.ProductRepository;
 import com.solution.grapeApp.services.ProductService;
 
@@ -28,6 +30,9 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    NotificationRepository notificationRepository;
 
     @Autowired
     ProductRepository productRepository;
@@ -61,6 +66,11 @@ public class ProductController {
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         try {
             Product savedProduct = productService.saveProduct(product);
+            if (savedProduct.getId() != null)
+                notificationRepository
+                        .save(new Notification(product.getEnglishName() + " is available now!!",
+                                "Hey AllScripts customers! We have added " + product.getEnglishName()
+                                        + " to our menu."));
             return ResponseEntity.ok(savedProduct);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -95,13 +105,13 @@ public class ProductController {
                     productsToBeAdded
                             .add(new Product(csvRecord.get(1), csvRecord.get(2), Float.parseFloat(csvRecord.get(3)),
                                     Float.parseFloat(csvRecord.get(4)), Double.parseDouble(csvRecord.get(5)),
-                                    csvRecord.get(6), optionalCategory.get()));
+                                    csvRecord.get(6), csvRecord.get(7), optionalCategory.get()));
                 } else {
                     Category category = categoryRepository.save(new Category(csvRecord.get(0)));
                     productsToBeAdded
                             .add(new Product(csvRecord.get(1), csvRecord.get(2), Float.parseFloat(csvRecord.get(3)),
                                     Float.parseFloat(csvRecord.get(4)), Double.parseDouble(csvRecord.get(5)),
-                                    csvRecord.get(6), category));
+                                    csvRecord.get(6), csvRecord.get(7), category));
                 }
             }
 

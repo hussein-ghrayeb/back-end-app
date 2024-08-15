@@ -42,6 +42,9 @@ public class Product {
     @Column(name = "ar_desc")
     private String arabicDescription;
 
+    @Column(name = "bar_code")
+    private String barCode;
+
     @Column(name = "en_desc", columnDefinition = "text")
     private String englishDescription;
 
@@ -73,11 +76,12 @@ public class Product {
     private List<CustomerFavoriteProduct> customerFavoriteProducts = new ArrayList();
 
     public Product(String englishName, String englishDescription, Float shelfAvailable, Float stockAvailable,
-            Double price, String imageUrl, Category category) {
+            Double price, String imageUrl, String barcode, Category category) {
         this.englishName = englishName;
         this.englishDescription = englishDescription;
         this.shelfAvailable = shelfAvailable;
         this.price = price;
+        this.barCode = barcode;
         this.category = category;
         this.imageUrl = imageUrl;
         this.stockAvailable = stockAvailable;

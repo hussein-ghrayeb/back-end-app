@@ -1,6 +1,7 @@
 package com.solution.grapeApp.controllers;
 
 import com.solution.grapeApp.entities.Category;
+import com.solution.grapeApp.repositories.CategoryRepository;
 import com.solution.grapeApp.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,9 @@ import java.util.Optional;
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @GetMapping("/getAllCategories")
     public ResponseEntity<List<Category>> getAllCategories() {
@@ -33,6 +37,22 @@ public class CategoryController {
         }
     }
 
+    @PutMapping("/updateCategory")
+    public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
+        try {
+            Optional<Category> optionalCategory = categoryService.getCategoryById(category.getId());
+
+            if (optionalCategory.isPresent()) {
+                optionalCategory.get().setEnglishName(category.getEnglishName());
+                return ResponseEntity.ok(categoryService.saveCategory(optionalCategory.get()));
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @PostMapping("/saveCategory")
     public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
         try {
@@ -43,7 +63,7 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/deleteCategory")
+    @DeleteMapping("/deleteCategory")
     public ResponseEntity<Void> deleteCategory(@RequestParam String id) {
         try {
             if (categoryService.isCategoryExists(id)) {

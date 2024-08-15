@@ -3,6 +3,7 @@ package com.solution.grapeApp.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.solution.grapeApp.entities.Notification;
@@ -17,6 +18,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Stri
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE notifications SET is_read = true", nativeQuery = true)
-    public void setAsReaded(String id);
+    @Query(value = "UPDATE notifications SET is_read = true where id = :id", nativeQuery = true)
+    public void setAsReaded(@Param("id") String id);
 }
