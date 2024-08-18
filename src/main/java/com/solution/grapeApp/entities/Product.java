@@ -30,9 +30,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "barcode")
-    private String barcode;
-
     @Column(name = "ar_name")
     private String arabicName;
 

@@ -70,7 +70,7 @@ public class OrderController {
             Optional<Order> optionalOrder = orderService.getOrderById(order.getId());
 
             if (optionalOrder.isPresent()) {
-                employeeRepository.setEmployeeAvailability(order.getDeliveredBy().getId(), true);
+                employeeRepository.setEmployeeAvailability(order.getCheckedBy().getId(), true);
                 orderRepository.setOrderstatus(order.getId(), order.getStatus().name());
                 return ResponseEntity.ok(order);
             } else {
@@ -155,7 +155,7 @@ public class OrderController {
             if (savedOrder.getId() != null) {
                 order.getProducts().forEach(product -> {
                     orderProductRepository.save(new OrderProduct(product.getProductCount(), product.getProductName(),
-                            product.getProductImageUrl(), product.getProductPrice(), savedOrder));
+                            product.getProductImageUrl(), product.getProductPrice(), savedOrder, product.getBarcode()));
                     productRepository.updateProductStock(product.getProductCount(), product.getId());
                 });
             }

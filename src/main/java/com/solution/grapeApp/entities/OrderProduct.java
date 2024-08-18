@@ -27,6 +27,9 @@ public class OrderProduct {
     @Column(name = "product_name")
     private String productName;
 
+    @Column(name = "bar_code")
+    private String barcode;
+
     @Column(name = "product_image_url")
     private String productImageUrl;
 
@@ -38,11 +41,12 @@ public class OrderProduct {
     @JsonIgnore
     private Order order;
 
-    public OrderProduct(int count, String productName, String imageUrl, Double price, Order order) {
+    public OrderProduct(int count, String productName, String imageUrl, Double price, Order order, String barcode) {
         this.productCount = count;
         this.productName = productName;
         this.productImageUrl = imageUrl;
         this.productPrice = price;
+        this.barcode = barcode;
         this.order = order;
     }
 
