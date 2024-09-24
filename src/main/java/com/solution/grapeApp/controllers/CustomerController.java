@@ -30,7 +30,12 @@ public class CustomerController {
 
     @GetMapping("/getAllCustomers")
     public ResponseEntity<List<Customer>> getAllCustomers() {
-        return ResponseEntity.ok(customerService.getAllCustomers());
+        try {
+            return ResponseEntity.ok(customerService.getAllCustomers());
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping("/deleteCustomer")

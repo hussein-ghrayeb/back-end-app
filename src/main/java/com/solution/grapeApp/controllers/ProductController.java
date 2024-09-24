@@ -66,11 +66,11 @@ public class ProductController {
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         try {
             Product savedProduct = productService.saveProduct(product);
-            if (savedProduct.getId() != null)
-                notificationRepository
-                        .save(new Notification(product.getEnglishName() + " is available now!!",
-                                "Hey AllScripts customers! We have added " + product.getEnglishName()
-                                        + " to our menu."));
+            // if (savedProduct.getId() != null)
+            // notificationRepository
+            // .save(new Notification(product.getEnglishName() + " is available now!!",
+            // "Hey AllScripts customers! We have added " + product.getEnglishName()
+            // + " to our menu."));
             return ResponseEntity.ok(savedProduct);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -105,13 +105,14 @@ public class ProductController {
                     productsToBeAdded
                             .add(new Product(csvRecord.get(1), csvRecord.get(2), Float.parseFloat(csvRecord.get(3)),
                                     Float.parseFloat(csvRecord.get(4)), Double.parseDouble(csvRecord.get(5)),
-                                    csvRecord.get(6), csvRecord.get(7), optionalCategory.get()));
+                                    csvRecord.get(6), csvRecord.get(7), Integer.parseInt(csvRecord.get(8)),
+                                    optionalCategory.get()));
                 } else {
                     Category category = categoryRepository.save(new Category(csvRecord.get(0)));
                     productsToBeAdded
                             .add(new Product(csvRecord.get(1), csvRecord.get(2), Float.parseFloat(csvRecord.get(3)),
                                     Float.parseFloat(csvRecord.get(4)), Double.parseDouble(csvRecord.get(5)),
-                                    csvRecord.get(6), csvRecord.get(7), category));
+                                    csvRecord.get(6), csvRecord.get(7), Integer.parseInt(csvRecord.get(8)), category));
                 }
             }
 

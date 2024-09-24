@@ -54,6 +54,9 @@ public class Product {
     @Column(name = "stock_available")
     private Float stockAvailable;
 
+    @Column(name = "shelf_number")
+    private int shelfNumber;
+
     @Column(name = "is_favorite")
     private Boolean isFavorite = false;
 
@@ -73,11 +76,12 @@ public class Product {
     private List<CustomerFavoriteProduct> customerFavoriteProducts = new ArrayList();
 
     public Product(String englishName, String englishDescription, Float shelfAvailable, Float stockAvailable,
-            Double price, String imageUrl, String barcode, Category category) {
+            Double price, String imageUrl, String barcode, int shelfNumber, Category category) {
         this.englishName = englishName;
         this.englishDescription = englishDescription;
         this.shelfAvailable = shelfAvailable;
         this.price = price;
+        this.shelfNumber = shelfNumber;
         this.barCode = barcode;
         this.category = category;
         this.imageUrl = imageUrl;

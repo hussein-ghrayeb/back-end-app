@@ -43,7 +43,7 @@ public class OrderController {
 
     @GetMapping("/getFirstCreatedOrder")
     public ResponseEntity<List<Order>> getFirstCreatedOrder() {
-        return ResponseEntity.ok(orderService.getFirstCreatedOrder());
+        return ResponseEntity.ok(orderService.getCreatedOrders());
     }
 
     @PutMapping("/updateCheckerOrder")
@@ -103,7 +103,7 @@ public class OrderController {
 
     @GetMapping("/getFirstPackedOrder")
     public ResponseEntity<List<Order>> getFirstPackedOrder() {
-        return ResponseEntity.ok(orderService.getFirstPackedOrder());
+        return ResponseEntity.ok(orderService.getPackedOrders());
     }
 
     @GetMapping("/getOrderById")
@@ -155,7 +155,8 @@ public class OrderController {
             if (savedOrder.getId() != null) {
                 order.getProducts().forEach(product -> {
                     orderProductRepository.save(new OrderProduct(product.getProductCount(), product.getProductName(),
-                            product.getProductImageUrl(), product.getProductPrice(), savedOrder, product.getBarcode()));
+                            product.getProductImageUrl(), product.getProductPrice(), product.getShelfNumber(),
+                            savedOrder, product.getBarCode()));
                     productRepository.updateProductStock(product.getProductCount(), product.getId());
                 });
             }
