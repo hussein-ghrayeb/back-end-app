@@ -18,6 +18,9 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    CustomerRepository customerRepository;
+
     @PostMapping("/register")
     public ResponseEntity<Customer> register(
             @RequestBody Customer customer) {
@@ -35,6 +38,18 @@ public class CustomerController {
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/getCustomerByPhoneNumber")
+    public ResponseEntity<Customer> getCustomerByPhoneNumber(@RequestParam String number) {
+        Optional<Customer> optional = customerRepository.findCustomerByUsername(number);
+
+        if (optional.isPresent()) {
+            Customer customer = optional.get();
+            return ResponseEntity.ok(customer);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
