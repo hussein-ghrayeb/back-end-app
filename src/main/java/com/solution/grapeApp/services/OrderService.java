@@ -33,8 +33,8 @@ public class OrderService {
         return repository.save(order);
     }
 
-    public void deleteOrderById(String id) {
-        repository.deleteById(id);
+    public void deleteOrderById(String id, String status) {
+        repository.setOrderstatus(id, status);
     }
 
     public Boolean isOrderExists(String id) {

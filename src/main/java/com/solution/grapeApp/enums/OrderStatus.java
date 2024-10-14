@@ -5,6 +5,7 @@ public enum OrderStatus {
     UNDER_PACKAGING,
     PACKED,
     PICKUPED,
+    UNDER_DELIVERY,
     DELIVERED,
     CANCELED;
 }

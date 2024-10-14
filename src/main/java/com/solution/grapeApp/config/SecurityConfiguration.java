@@ -35,6 +35,8 @@ public class SecurityConfiguration {
                 .permitAll()
                 .requestMatchers("/opt/uploads/files/**")
                 .permitAll()
+                .requestMatchers("/opt/customer/forgetPassword")
+                .permitAll()
                 .requestMatchers("/api/customer/register")
                 .permitAll()
                 .requestMatchers("/api/customer/getCustomerByPhoneNumber")

@@ -167,11 +167,13 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping("/deleteOrder")
-    public ResponseEntity<Void> deleteOrder(@RequestParam String id) {
+    @PutMapping("/cancelOrder")
+    public ResponseEntity<Void> cancelOrder(@RequestParam Order order) {
         try {
-            if (orderService.isOrderExists(id)) {
-                orderService.deleteOrderById(id);
+            Optional<Order> optionalOrder = orderRepository.findById(order.getId());
+
+            if (optionalOrder.isPresent()) {
+                orderService.deleteOrderById(order.getId(), optionalOrder.get().getStatus().name());
                 return ResponseEntity.ok().build();
             } else {
                 return ResponseEntity.noContent().build(); // 404 Not Found

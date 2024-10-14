@@ -1,8 +1,11 @@
 package com.solution.grapeApp.controllers;
 
 import com.solution.grapeApp.entities.Customer;
+import com.solution.grapeApp.entities.CustomerDTO;
 import com.solution.grapeApp.entities.Order;
+import com.solution.grapeApp.entities.Setting;
 import com.solution.grapeApp.services.CustomerService;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.solution.grapeApp.repositories.CustomerRepository;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -41,6 +45,22 @@ public class CustomerController {
         }
     }
 
+    @PutMapping("/forgetPassword")
+    public ResponseEntity<Customer> updateSetting(@RequestBody CustomerDTO customerDTO) {
+        try {
+            Optional<Customer> optional = customerRepository.findCustomerByUsername(customerDTO.getUsername());
+            if (optional.isPresent()) {
+                optional.get().setPassword(customerDTO.getPassword());
+                return ResponseEntity.ok(customerService.saveCustomer(optional.get()));
+            } else {
+                return ResponseEntity.notFound().build(); // 404 Not Found
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @GetMapping("/getCustomerByPhoneNumber")
     public ResponseEntity<Customer> getCustomerByPhoneNumber(@RequestParam String number) {
         Optional<Customer> optional = customerRepository.findCustomerByUsername(number);
@@ -49,7 +69,7 @@ public class CustomerController {
             Customer customer = optional.get();
             return ResponseEntity.ok(customer);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         }
     }
 
